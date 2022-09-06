@@ -2,23 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class SwitchForms : MonoBehaviour
 {
     [SerializeField] GameObject Normal;
     [SerializeField] GameObject Ball;
     //public bool isWerewolf;
     [SerializeField] int formSwitch;
+    PlayerInput input;
+    InputAction modeAction;
+    CharacterController controller;
     BallMovement ballScript;
     NormalMovement normalMovement;
     private void Awake()
     {
         normalMovement = GetComponent<NormalMovement>();
         ballScript = GetComponent<BallMovement>();
+        controller = GetComponent<CharacterController>();
+        input = GetComponent<PlayerInput>();
         Normal.SetActive(true);
         Ball.SetActive(false);
-        ballScript.enabled = false;
-
+        modeAction = input.actions["SwitchMode"];
         formSwitch = 1;
     }
 
@@ -30,28 +34,31 @@ public class SwitchForms : MonoBehaviour
 
     public void Transformation()
     {
-        if (Input.GetMouseButtonDown(1))
+        float action = modeAction.ReadValue<float>();
+        if (action == 1)
         {
             Normal.SetActive(false);
             Ball.SetActive(true);
             formSwitch = 2;
             ballScript.enabled = true;
             normalMovement.enabled = false;
+
             Ball.transform.position = Normal.transform.position;
             Ball.transform.rotation = Normal.transform.rotation;
-            
+            controller.height = 1f;
+
         }
 
-        else if (Input.GetMouseButtonUp(1))
+        else if (action != 1)
         {
             Normal.SetActive(true);
             Ball.SetActive(false);
             formSwitch = 1;
             ballScript.enabled = false;
-            normalMovement.enabled = enabled;
-            Normal.transform.position = Ball.transform.position;
-            Normal.transform.rotation = Ball.transform.rotation;
+            normalMovement.enabled = true;
 
+            Normal.transform.position = Ball.transform.position;
+            controller.height = 2f;
 
         }
     }

@@ -1,48 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class BallMovement : MonoBehaviour
 {
-    //Variables
-    public float speed = 6.0f;
-    public float jumpSpeed = 8.0f;
-    public float gravity = 20.0f;
-    private Vector3 moveDirection = Vector3.zero;
-    CharacterController controller;
-
-
-
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
+    [SerializeField] float playerSpeed = 2.0f;
+    [SerializeField] float jumpHeight = 1.0f;
+    [SerializeField] float gravityValue = -9.81f;
+    [SerializeField] float rotationSpeed = 5f;
+    PlayerInput input;
+    InputAction moveAction;
+    InputAction jumpAction;
+    private Transform camTransform;
+    [SerializeField] Transform ball;
     private void Start()
     {
+
+        camTransform = Camera.main.transform;
+        input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
+        moveAction = input.actions["Move"];
+        jumpAction = input.actions["Jump"];
+
     }
+
     void Update()
     {
-
-        Vector3 velocity = controller.velocity;
-
-        // is the controller on the ground?
-        if (controller.isGrounded)
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            //Feed moveDirection with input.
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection = transform.TransformDirection(moveDirection);
-            //Multiply it by speed.
-            moveDirection *= speed;
-            //Jumping
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-
+            playerVelocity.y = 0f;
         }
 
-        
-        //Applying gravity to the controller
-        moveDirection.y -= gravity * Time.deltaTime;
-        //Making the character move
-        velocity += moveDirection * Time.deltaTime * speed;
-        controller.Move(velocity * Time.deltaTime);
-        controller.height = 1f;
-        
+        Vector2 input = moveAction.ReadValue<Vector2>();
+        Vector3 move = new Vector3(input.x, 0, input.y);
+        move = move.x * camTransform.right.normalized + move.z * camTransform.forward.normalized;
+        move.y = 0f;
+        controller.Move(move * Time.deltaTime * playerSpeed);
+
+        // Changes the height position of the player..
+        if (jumpAction.triggered && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+        float targetAngle = camTransform.rotation.eulerAngles.y;
+        Quaternion rotation = Quaternion.Euler(0, targetAngle, 0);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 }
