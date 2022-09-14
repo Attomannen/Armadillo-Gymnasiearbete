@@ -47,6 +47,7 @@ public class SwitchForms : MonoBehaviour
             Ball.transform.rotation = Normal.transform.rotation;
             controller.height = 1f;
 
+
         }
 
         else if (action != 1)
@@ -58,7 +59,7 @@ public class SwitchForms : MonoBehaviour
             normalMovement.enabled = true;
 
             Normal.transform.position = Ball.transform.position;
-            controller.height = 2f;
+            controller.height = 1.5f;
 
         }
     }

@@ -15,10 +15,9 @@ public class BallMovement : MonoBehaviour
     InputAction moveAction;
     InputAction jumpAction;
     private Transform camTransform;
-    [SerializeField] Transform ball;
+
     private void Start()
     {
-
         camTransform = Camera.main.transform;
         input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
@@ -39,7 +38,11 @@ public class BallMovement : MonoBehaviour
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = move.x * camTransform.right.normalized + move.z * camTransform.forward.normalized;
         move.y = 0f;
+
+
         controller.Move(move * Time.deltaTime * playerSpeed);
+
+
 
         // Changes the height position of the player..
         if (jumpAction.triggered && groundedPlayer)
@@ -51,7 +54,7 @@ public class BallMovement : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
         float targetAngle = camTransform.rotation.eulerAngles.y;
         Quaternion rotation = Quaternion.Euler(0, targetAngle, 0);
-
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+
     }
 }
