@@ -39,7 +39,11 @@ public class NormalMovement : MonoBehaviour
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = move.x * camTransform.right.normalized + move.z * camTransform.forward.normalized;
         move.y = 0f;
+
+        
         controller.Move(move * Time.deltaTime * playerSpeed);
+
+        
 
         // Changes the height position of the player..
         if (jumpAction.triggered && groundedPlayer)
