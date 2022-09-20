@@ -14,10 +14,8 @@ public class SwitchForms : MonoBehaviour
     CharacterController controller;
     BallMovement ballScript;
     Movement normalMovement;
-    ShootScript shoot;
     private void Awake()
     {
-        shoot = GetComponent<ShootScript>();
         normalMovement = GetComponent<Movement>();
         ballScript = GetComponent<BallMovement>();
         controller = GetComponent<CharacterController>();
@@ -57,7 +55,6 @@ public class SwitchForms : MonoBehaviour
             formSwitch = 1;
             ballScript.enabled = false;
             normalMovement.enabled = true;
-            shoot.enabled = true;
             Normal.transform.position = Ball.transform.position;
             controller.height = 1.5f;
     }
@@ -69,7 +66,6 @@ public class SwitchForms : MonoBehaviour
         formSwitch = 2;
         ballScript.enabled = true;
         normalMovement.enabled = false;
-        shoot.enabled = false;
         Ball.transform.position = Normal.transform.position;
         Ball.transform.rotation = Normal.transform.rotation;
         controller.height = 1f;

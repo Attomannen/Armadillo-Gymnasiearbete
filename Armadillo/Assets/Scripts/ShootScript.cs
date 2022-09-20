@@ -21,16 +21,28 @@ public class ShootScript : MonoBehaviour
         shootAction = playerInput.actions["Fire"];
 
         Cursor.lockState = CursorLockMode.Locked;
+
     }
 
-    private void OnEnable()
+    bool IsAvailable = true;
+    [SerializeField] float CooldownDuration = 1.0f;
+    private void Update()
     {
-        shootAction.performed += _ => ShootGun();  
-    }
 
-    private void OnDisable()
+        float action = shootAction.ReadValue<float>();
+
+        if (action == 1 && IsAvailable)
+        {
+            ShootGun();
+            StartCoroutine(StartCooldown());
+
+        }
+    }
+    public IEnumerator StartCooldown()
     {
-        shootAction.performed -= _ => ShootGun();
+        IsAvailable = false;
+        yield return new WaitForSeconds(CooldownDuration);
+        IsAvailable = true;
     }
 
     // Update is called once per frame
@@ -41,8 +53,6 @@ public class ShootScript : MonoBehaviour
         BulletController bulletController = bullet.GetComponent<BulletController>();
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity))
         {
-
-
             bulletController.target = hit.point;
             bulletController.hit = true;
         }

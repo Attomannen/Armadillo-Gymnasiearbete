@@ -7,7 +7,7 @@ public class BulletController : MonoBehaviour
 {
 
     [SerializeField] GameObject bulletDecal;
-    float speed = 50;
+    float speed = 100;
     float timeToDestroy = 3f;
     public Vector3 target { get; set; }
     public bool hit { get; set; }
