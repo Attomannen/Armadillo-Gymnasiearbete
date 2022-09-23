@@ -3,13 +3,12 @@ using System.Collections;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public float bulletSpeed = 10;
+    public float bulletSpeed = 25;
     public Rigidbody bullet;
 
 
     void Start()
     {
-        Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, transform.position, transform.rotation);
-        bulletClone.velocity = transform.forward * bulletSpeed;
+        bullet.velocity = transform.forward * bulletSpeed;
     }
 }

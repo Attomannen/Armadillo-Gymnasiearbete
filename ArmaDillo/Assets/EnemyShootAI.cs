@@ -9,15 +9,14 @@ public class EnemyShootAI : MonoBehaviour
     [SerializeField] Transform Target;
     [SerializeField] float EnemyRange = 20f;
     float distanceBetweenTarget;
-    [SerializeField] Transform[] projectileSpawnPoint;
+    [SerializeField] Transform projectileSpawnPoint;
     [SerializeField] GameObject projectilePrefab;
-    float countDownFire = 0f;
     [SerializeField] float fireRate = 10f;
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = 2f;
+        agent.stoppingDistance = 10f;
 
     }
 
@@ -33,25 +32,23 @@ public class EnemyShootAI : MonoBehaviour
         }
 
 
-        if(distanceBetweenTarget <= agent.stoppingDistance)
+        if(distanceBetweenTarget <= agent.stoppingDistance && IsAvailable)
         {
-            if (countDownFire <= 0f)
-            {
 
-
-                foreach (Transform SpawnPoints in projectileSpawnPoint)
-                {
-
-                    Instantiate(projectilePrefab, SpawnPoints.position, transform.rotation);
+                    Instantiate(projectilePrefab, projectileSpawnPoint.position, transform.rotation);
+                    StartCoroutine(StartCooldown());
                     Debug.Log("Bullet");
-                }
-
-
-            }
-
-            countDownFire = 1f / fireRate;
-
-            countDownFire -= Time.deltaTime;
+                
         }
     }
+    bool IsAvailable = true;
+    [SerializeField] float CooldownDuration = 1.0f;
+
+    public IEnumerator StartCooldown()
+    {
+        IsAvailable = false;
+        yield return new WaitForSeconds(CooldownDuration);
+        IsAvailable = true;
+    }
+
 }
