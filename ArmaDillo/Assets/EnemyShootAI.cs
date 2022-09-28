@@ -17,7 +17,7 @@ public class EnemyShootAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = 2f;
+        agent.stoppingDistance = EnemyRange/2;
 
     }
 
@@ -44,12 +44,13 @@ public class EnemyShootAI : MonoBehaviour
 
                     Instantiate(projectilePrefab, SpawnPoints.position, transform.rotation);
                     Debug.Log("Bullet");
+                    countDownFire = 1f;
                 }
 
+                countDownFire = 1f / fireRate;
 
             }
 
-            countDownFire = 1f / fireRate;
 
             countDownFire -= Time.deltaTime;
         }

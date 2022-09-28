@@ -9,7 +9,6 @@ public class EnemyBullet : MonoBehaviour
 
     void Start()
     {
-        Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, transform.position, transform.rotation);
-        bulletClone.velocity = transform.forward * bulletSpeed;
+        bullet.velocity = transform.forward * bulletSpeed;
     }
 }

@@ -1,32 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
-    float currentHealth;
-    [SerializeField] Slider healthImage;
+    [SerializeField] float currentHealth;
+    Slider Healthbar;
     // Start is called before the first frame update
     void Start()
     {
+        Healthbar = GetComponentInChildren<Slider>();
         currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (currentHealth <= 0)
+        Healthbar.value = currentHealth;
+        if(currentHealth <= 0)
         {
-            Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
-
+            Destroy(gameObject);
         }
+
     }
-   public void TakeDamage(float Damage)
+    public void TakeDamage(float Damage)
     {
         currentHealth -= Damage;
     }

@@ -112,3 +112,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletDecal: {fileID: 2729609614765696058, guid: 8d23c37d589283d4ab30f6b711d7537d,
     type: 3}
+  bulletParent: {fileID: 0}
