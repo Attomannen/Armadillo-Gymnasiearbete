@@ -16,8 +16,14 @@ public class BallMovement : MonoBehaviour
     InputAction moveAction;
     InputAction jumpAction;
     private Transform camTransform;
+
+    private void OnEnable()
+    {
+        smoothInputSpeed = 0;
+    }
     private void Start()
     {
+        
         camTransform = Camera.main.transform;
         input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
