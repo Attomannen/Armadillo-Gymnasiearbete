@@ -1,58 +1,111 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 public class EnemyShootAI : MonoBehaviour
 {
-    NavMeshAgent agent;
+    public NavMeshAgent NavAgent;
+    public Transform Player;
+    public LayerMask GroundCheck, PlayerCheck;
+    public Transform EnemyPrototype;
+    public float range;
+    public float Damage;
 
-    [SerializeField] Transform Target;
-    [SerializeField] float EnemyRange = 20f;
-    float distanceBetweenTarget;
-    [SerializeField] Transform[] projectileSpawnPoint;
-    [SerializeField] GameObject projectilePrefab;
-    float countDownFire = 0f;
-    [SerializeField] float fireRate = 10f;
-    // Start is called before the first frame update
-    void Start()
+    public Vector3 WalkPoint; // Code for patrolling Around
+    bool WalkPointSet;
+    public float WalkPointRange;
+
+    public float SightRange, AttackRange;   // Code for checking when to engage in a firefight with the player
+    public bool PlayerInSight, AttackPlayer;
+
+    public float AttackCooldown; // Code for firefights with the player
+    bool AlreadyAttacked;
+
+    private void AIActive()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = EnemyRange/2;
-
+        Player = GameObject.Find("Player").transform;
+        NavAgent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        distanceBetweenTarget = Vector3.Distance(transform.position, Target.position);
+        PlayerInSight = Physics.CheckSphere(transform.position, SightRange, PlayerCheck);
+        AttackPlayer = Physics.CheckSphere(transform.position, AttackRange, PlayerCheck);
 
-
-        if(distanceBetweenTarget <= EnemyRange)
+        if (!PlayerInSight && !AttackPlayer)
         {
-            agent.SetDestination(Target.position);
+            Patrol();
+        }
+        if (PlayerInSight && !AttackPlayer)
+        {
+            Engage();
+        }
+        if (PlayerInSight && AttackPlayer)
+        {
+            FireAtPlayer();
+        }
+    }
+
+    private void Patrol() // The enemy will move in order to try and find the player
+    {
+        if (!WalkPointSet)
+        {
+            SearchWalkPoint();
         }
 
-
-        if(distanceBetweenTarget <= agent.stoppingDistance)
+        if (WalkPointSet)
         {
-            if (countDownFire <= 0f)
+            NavAgent.SetDestination(WalkPoint);
+        }
+
+        Vector3 WalkPointDistance = transform.position - WalkPoint;
+
+        if (WalkPointDistance.magnitude < 1f)
+        {
+            WalkPointSet = false;
+        }
+    }
+
+    private void SearchWalkPoint()  // Makes a random point where the enemy would patrol
+    {
+        float WalkZ = Random.Range(-WalkPointRange, WalkPointRange);
+        float WalkX = Random.Range(-WalkPointRange, WalkPointRange);
+        WalkPoint = new Vector3(transform.position.x + WalkX, transform.position.y, transform.position.z + WalkZ);
+        if (Physics.Raycast(WalkPoint, -transform.up, 2f, GroundCheck))
+        {
+            WalkPointSet = true;
+        }
+    }
+
+    private void Engage() // The enemy has found the player and will move towards them to get a better shot
+    {
+        NavAgent.SetDestination(Player.position);
+    }
+
+    private void FireAtPlayer() // The enemy will now try to get a shot on the player
+    {
+        NavAgent.SetDestination(transform.position);
+        transform.LookAt(Player);
+        if (!AlreadyAttacked)
+        {
+            RaycastHit Hit;
+            if (Physics.Raycast(EnemyPrototype.transform.position, EnemyPrototype.transform.forward, out Hit, range, PlayerCheck))
             {
+                Debug.Log(Hit.collider.name);
 
-
-                foreach (Transform SpawnPoints in projectileSpawnPoint)
+                PlayerHealth target = Hit.transform.GetComponent<PlayerHealth>();
+                if (target != null)
                 {
-
-                    Instantiate(projectilePrefab, SpawnPoints.position, transform.rotation);
-                    Debug.Log("Bullet");
-                    countDownFire = 1f;
+                    target.TakeDamage(Damage);
+                    Debug.Log("Meow");
                 }
-
-                countDownFire = 1f / fireRate;
-
             }
-
-
-            countDownFire -= Time.deltaTime;
+            AlreadyAttacked = true;
+            Invoke(nameof(AttackReset), AttackCooldown);
         }
+    }
+
+    private void AttackReset()
+    {
+        AlreadyAttacked = false;
     }
 }
