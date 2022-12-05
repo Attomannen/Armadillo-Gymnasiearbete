@@ -5,24 +5,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class SwitchForms : MonoBehaviour
 {
-    [SerializeField] GameObject Normal;
-    [SerializeField] GameObject Ball;
+
     //public bool isWerewolf;
     public int formSwitch { get; set; }
     PlayerInput input;
     InputAction modeAction;
     CharacterController controller;
-    BallMovement ballScript;
-    Movement normalMovement;
+    Movement movement;
+    Animator anim;
     private void Awake()
     {
-        normalMovement = GetComponent<Movement>();
-        ballScript = GetComponent<BallMovement>();
+        anim = GetComponent<Animator>();
+        movement = GetComponent<Movement>();
         controller = GetComponent<CharacterController>();
         input = GetComponent<PlayerInput>();
-        
-        Normal.SetActive(true);
-        Ball.SetActive(false);
+
         modeAction = input.actions["SwitchMode"];
         formSwitch = 1;
     }
@@ -50,24 +47,15 @@ public class SwitchForms : MonoBehaviour
 
     void NormalArmadillo()
     {
-            Normal.SetActive(true);
-            Ball.SetActive(false);
-            formSwitch = 1;
-            ballScript.enabled = false;
-            normalMovement.enabled = true;
-            Normal.transform.position = Ball.transform.position;
-            controller.height = 1.5f;
+        anim.SetBool("Ball", false);
+
+        //controller.height = 2f;
     }
 
     void BallArmadillo()
     {
-        Normal.SetActive(false);
-        Ball.SetActive(true);
-        formSwitch = 2;
-        ballScript.enabled = true;
-        normalMovement.enabled = false;
-        Ball.transform.position = Normal.transform.position;
-        Ball.transform.rotation = Normal.transform.rotation;
-        controller.height = 1f;
+        anim.SetBool("Ball", true);
+
+        //controller.height = 1f;
     }
 }

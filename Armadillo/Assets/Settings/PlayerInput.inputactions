@@ -16,9 +16,9 @@
                 },
                 {
                     "name": "Look",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "052dee68-abd2-4cbe-b3b7-60cd34b11457",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -186,6 +186,17 @@
                     "name": "",
                     "id": "3ea4d645-4504-4529-b061-ab81934c3752",
                     "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f9b1d58-d64a-41c2-bf0f-4cbc66bb13ac",
+                    "path": "<HID::Logitech Inc. WingMan Formula Force GP>/stick",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
