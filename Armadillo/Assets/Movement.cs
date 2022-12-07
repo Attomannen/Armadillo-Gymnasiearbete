@@ -42,7 +42,7 @@ public class Movement : MonoBehaviour
     private Vector2 currentInputVector;
     private Vector2 smoothInputVelocity;
     [SerializeField] float smoothInputSpeed = 0.5f;
-    static float t = 0.0f;
+
 
     void Update()
     {
@@ -85,7 +85,6 @@ public class Movement : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, targetAngle, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
-
         inputSpeed = runningAction.ReadValue<float>();
 
         if(inputSpeed > 0f)
@@ -101,7 +100,7 @@ public class Movement : MonoBehaviour
         }
 
     }
- 
+
 }
 
 
