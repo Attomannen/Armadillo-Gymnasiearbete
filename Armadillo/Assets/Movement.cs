@@ -13,8 +13,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float jumpHeight = 1.0f;
     [SerializeField] float gravityValue = -39.81f;
     [SerializeField] float rotationSpeed = 5f;
-    float normalSpeed = 8;
-    float ballSpeed = 16;
+    float normalSpeed = 12;
+    float ballSpeed = 20;
 
     PlayerInput input;
     InputAction moveAction;
@@ -39,6 +39,9 @@ public class Movement : MonoBehaviour
 
 
     }
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float groundDistance;
+    [SerializeField] LayerMask groundMask;
     private Vector2 currentInputVector;
     private Vector2 smoothInputVelocity;
     [SerializeField] float smoothInputSpeed = 0.5f;
@@ -46,7 +49,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
+        groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
