@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GenerateFence : MonoBehaviour
+public class FenceGenerator : MonoBehaviour
 {
     // The game object to generate the fence around.
     public GameObject target;

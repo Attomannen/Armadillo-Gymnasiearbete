@@ -96,9 +96,9 @@ public class ShootScript : MonoBehaviour
                 bulletHole.transform.LookAt(hit.point + hit.normal * 1f);
                 bulletHole.transform.parent = hit.transform;
                 Destroy(bulletHole, 6);
-                if (hit.collider.gameObject.GetComponent<EnemyHealth>() != null)
+                if (hit.collider.gameObject.GetComponent<EnemyAI>() != null)
                 {
-                    hit.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(20);
+                    hit.collider.gameObject.GetComponent<EnemyAI>().TakeCover();
                 }
             }
 
