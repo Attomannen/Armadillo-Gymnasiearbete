@@ -98,7 +98,7 @@ public class ShootScript : MonoBehaviour
                 Destroy(bulletHole, 6);
                 if (hit.collider.gameObject.GetComponent<EnemyAI>() != null)
                 {
-                    hit.collider.gameObject.GetComponent<EnemyAI>().TakeCover();
+                    //hit.collider.gameObject.GetComponent<EnemyAI>().TakeCover();
                 }
             }
 
