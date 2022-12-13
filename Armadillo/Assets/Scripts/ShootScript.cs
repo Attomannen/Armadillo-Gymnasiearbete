@@ -21,17 +21,23 @@ public class ShootScript : MonoBehaviour
 
     [SerializeField] float force = 100f;
 
-    [SerializeField] int maxMagSize = 21;
-
+    [SerializeField] int maxMagSize = 17;
+    
     [SerializeField] int maxAmmo;
     int magazine;
     [SerializeField] TextMeshProUGUI magText;
+
+    [SerializeField] Animator pistolAnim;
+    AudioSource source;
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] AudioClip reloadSound;
+
     // Start is called before the first frame update
     void Awake()
     {
+        source = GetComponent<AudioSource>();
         magText.text = magazine + "/" + maxAmmo;
         magazine = maxMagSize;
-        health = GetComponent<PlayerHealth>();
         cam = Camera.main;
         playerInput = GetComponent<PlayerInput>();
         shootAction = playerInput.actions["Fire"];
@@ -45,39 +51,52 @@ public class ShootScript : MonoBehaviour
     private void Update()
     {
 
-        float action = shootAction.ReadValue<float>();
-        magText.text = magazine + "/" + maxAmmo;
+        magText.text = magazine + "";
 
-        if (action == 1 && IsAvailable && magazine != 0)
+        if (shootAction.triggered && IsAvailable && magazine != 0)
         {
             ShootGun();
+            source.PlayOneShot(shootSound);
             StartCoroutine(StartCooldown());
         }
-        if(magazine == 0)
+        if (magazine == 0)
         {
             StartCoroutine(Reload());
         }
     }
-
+    bool isPlayingReloadAnim;
     int reloadTime = 2;
     public IEnumerator Reload()
     {
+        yield return new WaitForSeconds(0.15f);
+        if (!isPlayingReloadAnim && magazine == 0)
+        {
+        Debug.Log("IsPlayingAnimation");
+        pistolAnim.SetTrigger("Reload");
+            source.PlayOneShot(reloadSound);
+        }
+        isPlayingReloadAnim = true;
         yield return new WaitForSeconds(reloadTime);
         magazine = maxMagSize;
+        isPlayingReloadAnim = false;
     }
+    bool animShoot;
     public IEnumerator StartCooldown()
     {
+        animShoot = true;
         IsAvailable = false;
         yield return new WaitForSeconds(CooldownDuration);
         IsAvailable = true;
+        yield return new WaitForSeconds(0.4f);
+        animShoot = false;
     }
-    PlayerHealth health;
     // Update is called once per frame
     void ShootGun()
     {
+        pistolAnim.SetTrigger("Recoil");
         magazine--;
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, bulletHitMissDistance))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, bulletHitMissDistance, layerMask))
         {
 
             if (hit.collider.gameObject.tag != "Player")
