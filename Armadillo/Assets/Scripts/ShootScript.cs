@@ -36,7 +36,7 @@ public class ShootScript : MonoBehaviour
     void Awake()
     {
         source = GetComponent<AudioSource>();
-        magText.text = magazine + "/" + maxAmmo;
+        magText.text = magazine + "";
         magazine = maxMagSize;
         cam = Camera.main;
         playerInput = GetComponent<PlayerInput>();
@@ -65,7 +65,7 @@ public class ShootScript : MonoBehaviour
         }
     }
     bool isPlayingReloadAnim;
-    int reloadTime = 2;
+    float reloadTime = 1.5f;
     public IEnumerator Reload()
     {
         yield return new WaitForSeconds(0.15f);
@@ -87,8 +87,7 @@ public class ShootScript : MonoBehaviour
         IsAvailable = false;
         yield return new WaitForSeconds(CooldownDuration);
         IsAvailable = true;
-        yield return new WaitForSeconds(0.4f);
-        animShoot = false;
+
     }
     // Update is called once per frame
     void ShootGun()
