@@ -23,7 +23,6 @@ public class ShootScript : MonoBehaviour
 
     [SerializeField] int maxMagSize = 17;
     
-    [SerializeField] int maxAmmo;
     int magazine;
     [SerializeField] TextMeshProUGUI magText;
 
@@ -65,9 +64,11 @@ public class ShootScript : MonoBehaviour
         }
     }
     bool isPlayingReloadAnim;
+    bool reloading;
     float reloadTime = 1.5f;
     public IEnumerator Reload()
     {
+        reloading = false;
         yield return new WaitForSeconds(0.15f);
         if (!isPlayingReloadAnim && magazine == 0)
         {
@@ -77,8 +78,13 @@ public class ShootScript : MonoBehaviour
         }
         isPlayingReloadAnim = true;
         yield return new WaitForSeconds(reloadTime);
-        magazine = maxMagSize;
         isPlayingReloadAnim = false;
+        if (!reloading)
+        {
+        magazine = maxMagSize;
+            reloading = true;
+        }
+        StopCoroutine(Reload());
     }
     bool animShoot;
     public IEnumerator StartCooldown()
@@ -95,6 +101,7 @@ public class ShootScript : MonoBehaviour
         pistolAnim.SetTrigger("Recoil");
         magazine--;
         RaycastHit hit;
+        Debug.Log(magazine);
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, bulletHitMissDistance, layerMask))
         {
 

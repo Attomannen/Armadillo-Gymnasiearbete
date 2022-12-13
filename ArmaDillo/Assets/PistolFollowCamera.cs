@@ -11,7 +11,7 @@ public class PistolFollowCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         transform.localRotation = Quaternion.Euler(Camera.main.transform.localRotation.x * 125, transform.localRotation.y, transform.localRotation.z);
 
