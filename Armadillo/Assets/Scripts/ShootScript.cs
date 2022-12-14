@@ -10,6 +10,8 @@ using TMPro;
 public class ShootScript : MonoBehaviour
 {
     InputAction shootAction;
+    InputAction reloadAction;
+
     PlayerInput playerInput;
     Camera cam;
     [SerializeField] LayerMask layerMask;
@@ -40,13 +42,14 @@ public class ShootScript : MonoBehaviour
         cam = Camera.main;
         playerInput = GetComponent<PlayerInput>();
         shootAction = playerInput.actions["Fire"];
-
+        reloadAction = playerInput.actions["Reload"];
         Cursor.lockState = CursorLockMode.Locked;
 
     }
 
     bool IsAvailable = true;
     [SerializeField] float CooldownDuration = 0f;
+    bool startReloading = false;
     private void Update()
     {
 
@@ -58,8 +61,9 @@ public class ShootScript : MonoBehaviour
             source.PlayOneShot(shootSound);
             StartCoroutine(StartCooldown());
         }
-        if (magazine == 0)
+        if (magazine == 0 && !startReloading || reloadAction.triggered && magazine <= 16 && !startReloading)
         {
+            startReloading = true;
             StartCoroutine(Reload());
         }
     }
@@ -73,9 +77,10 @@ public class ShootScript : MonoBehaviour
         if (!isPlayingReloadAnim && magazine == 0)
         {
         Debug.Log("IsPlayingAnimation");
-        pistolAnim.SetTrigger("Reload");
             source.PlayOneShot(reloadSound);
         }
+        pistolAnim.SetTrigger("Reload");
+
         isPlayingReloadAnim = true;
         yield return new WaitForSeconds(reloadTime);
         isPlayingReloadAnim = false;
@@ -84,6 +89,7 @@ public class ShootScript : MonoBehaviour
         magazine = maxMagSize;
             reloading = true;
         }
+        startReloading = false;
         StopCoroutine(Reload());
     }
     bool animShoot;
