@@ -56,7 +56,7 @@ public class ShootScript : MonoBehaviour
 
         magText.text = magazine + "";
 
-        if (shootAction.triggered && IsAvailable && magazine != 0)
+        if (shootAction.triggered && IsAvailable && magazine != 0 && !isReloading)
         {
             ShootGun();
             source.PlayOneShot(shootSound);
@@ -68,35 +68,31 @@ public class ShootScript : MonoBehaviour
             StartCoroutine(Reload());
         }
     }
-    bool isPlayingReloadAnim;
+    bool isReloading;
     bool reloading;
     float reloadTime = 1.5f;
     public IEnumerator Reload()
     {
+        isReloading = true;
         reloading = false;
         yield return new WaitForSeconds(0.15f);
-        if (!isPlayingReloadAnim && magazine == 0)
-        {
-        Debug.Log("IsPlayingAnimation");
-            source.PlayOneShot(reloadSound);
-        }
+
+        source.PlayOneShot(reloadSound);
+        
         pistolAnim.SetTrigger("Reload");
 
-        isPlayingReloadAnim = true;
         yield return new WaitForSeconds(reloadTime);
-        isPlayingReloadAnim = false;
         if (!reloading)
         {
         magazine = maxMagSize;
             reloading = true;
         }
         startReloading = false;
+        isReloading = false;
         StopCoroutine(Reload());
     }
-    bool animShoot;
     public IEnumerator StartCooldown()
     {
-        animShoot = true;
         IsAvailable = false;
         yield return new WaitForSeconds(CooldownDuration);
         IsAvailable = true;
@@ -124,18 +120,9 @@ public class ShootScript : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * force);
                 }
-                if(hit.collider.gameObject.layer == bulletMarkMask)
-                {
-                    var bulletHole = Instantiate(bulletMark, hit.point + hit.normal * 0.001f, Quaternion.identity);
-                    bulletHole.transform.LookAt(hit.point + hit.normal * 1f);
-                    bulletHole.transform.parent = hit.transform;
-                    Destroy(bulletHole, 6);
-                }
-
                 if (hit.collider.gameObject.tag == "Enemy")
                 {
-                   
-                   hit.collider.gameObject.GetComponentInParent<Arne>().TakeDamage(100);
+                    hit.transform.gameObject.GetComponentInParent<Arne>().TakeDamage(25);
                 }
             }
 
