@@ -18,6 +18,7 @@ public class ShootScript : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform shootPointTransform;
     [SerializeField] float bulletHitMissDistance = 25f;
+    [SerializeField] LayerMask bulletMarkMask;
 
     [SerializeField] GameObject bulletMark;
 
@@ -123,13 +124,18 @@ public class ShootScript : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * force);
                 }
-                var bulletHole = Instantiate(bulletMark, hit.point + hit.normal * 0.001f, Quaternion.identity);
-                bulletHole.transform.LookAt(hit.point + hit.normal * 1f);
-                bulletHole.transform.parent = hit.transform;
-                Destroy(bulletHole, 6);
-                if (hit.collider.gameObject.GetComponent<EnemyAI>() != null)
+                if(hit.collider.gameObject.layer == bulletMarkMask)
                 {
-                    //hit.collider.gameObject.GetComponent<EnemyAI>().TakeCover();
+                    var bulletHole = Instantiate(bulletMark, hit.point + hit.normal * 0.001f, Quaternion.identity);
+                    bulletHole.transform.LookAt(hit.point + hit.normal * 1f);
+                    bulletHole.transform.parent = hit.transform;
+                    Destroy(bulletHole, 6);
+                }
+
+                if (hit.collider.gameObject.tag == "Enemy")
+                {
+                   
+                   hit.collider.gameObject.GetComponentInParent<Arne>().TakeDamage(100);
                 }
             }
 
