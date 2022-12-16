@@ -106,7 +106,7 @@ public class Arne : MonoBehaviour
     {
         health -= damage;
 
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (health <= 0) Invoke(nameof(DestroyEnemy), 0f);
     }
     bool dead = false;
     private void DestroyEnemy()
