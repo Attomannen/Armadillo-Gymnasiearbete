@@ -5,5 +5,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
+    private void FixedUpdate()
+    {
+        transform.Translate(transform.forward * 2f);
+    }
 }

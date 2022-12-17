@@ -14,7 +14,7 @@ public class SwitchForms : MonoBehaviour
     CharacterController controller;
     Movement movement;
     Animator anim;
-    ShootScript shoot;
+    PlayerGun shoot;
    [SerializeField] Image crosshair1;
     [SerializeField] Image crosshair2;
 
@@ -24,7 +24,7 @@ public class SwitchForms : MonoBehaviour
         movement = GetComponent<Movement>();
         controller = GetComponent<CharacterController>();
         input = GetComponent<PlayerInput>();
-        shoot = GetComponent<ShootScript>();
+        shoot = GetComponent<PlayerGun>();
         modeAction = input.actions["SwitchMode"];
         formSwitch = 1;
     }
