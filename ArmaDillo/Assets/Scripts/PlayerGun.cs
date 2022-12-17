@@ -101,8 +101,7 @@ public class PlayerGun : MonoBehaviour
             direction += new Vector3(
                 Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
                 Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
-                Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
-            );
+                Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z));
 
             direction.Normalize();
         }

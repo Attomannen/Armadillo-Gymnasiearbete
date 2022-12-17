@@ -36,7 +36,6 @@ public class Arne : MonoBehaviour
 
     private void Update()
     {
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0f);
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -114,6 +113,7 @@ public class Arne : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        if (health <= 0) Invoke(nameof(DestroyEnemy), 0f);
 
     }
 
@@ -128,8 +128,14 @@ public class Arne : MonoBehaviour
         anim.SetTrigger("Death");
         dead = true; 
         }
+        agent.isStopped = true;
     }
-  
+    [SerializeField] GameObject deathSmoke;
+  public void spawnDeathSmoke()
+    {
+        Instantiate(deathSmoke, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
