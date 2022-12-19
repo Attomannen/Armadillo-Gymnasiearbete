@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Bullet
   - Hitmarker
+  - Shopkeeper
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - LaserProjectile
   - Bullet
   - Teeth
-  - 
+  - Shopkeeper
   - 
   - 
   - 

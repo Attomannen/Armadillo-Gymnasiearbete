@@ -52,7 +52,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Update()
     {
-        magText.text = magazine + "";
+        magText.text = "Ammo: " + magazine;
         if (magazine == 0 && !startReloading || reload.triggered && magazine <= 16 && !startReloading)
         {
             startReloading = true;

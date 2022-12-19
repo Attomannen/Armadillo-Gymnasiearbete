@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: a203ad9c4fcc2b949bb04029e4129cce
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - RNS Sanz
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c1790e66b0e94cb42a8821788799ad52, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 6a61cb4080b511b48ba656f3041f2e2f
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - RNS Sanz
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c1790e66b0e94cb42a8821788799ad52, type: 3}
+  - {fileID: 12800000, guid: c5379cce41c7b364e92cff3009c93a20, type: 3}
+  - {fileID: 12800000, guid: 66cd9465618dfab418e78444938dc2a5, type: 3}
+  - {fileID: 12800000, guid: 380506de56c87654dbdfd7b6aeae94a8, type: 3}
+  - {fileID: 12800000, guid: c7a9b86b92c23e64fbb23190ee96c6b6, type: 3}
+  - {fileID: 12800000, guid: a203ad9c4fcc2b949bb04029e4129cce, type: 3}
+  - {fileID: 12800000, guid: 18550b70f0701be4f99acb98123b6f56, type: 3}
+  - {fileID: 12800000, guid: d55e2252c1005314e96d0f8859693823, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
