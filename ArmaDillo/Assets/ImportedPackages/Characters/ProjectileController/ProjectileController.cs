@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour 
@@ -15,21 +14,22 @@ public class ProjectileController : MonoBehaviour
 
     // For following missiles 
 
-    Transform Target; 
-    public float RotationSpeed; 
-    public float TranslationSpeed; 
-    public float LifeTime = 1f;
-
+     Transform Target; 
+     public float RotationSpeed; 
+     public float TranslationSpeed; 
+     public float LifeTime = 1f;
+    Vector3 to_Targets;
     private void Start()
     {
-        Target = GameObject.Find("Player").transform;
-
+        Target = GameObject.FindGameObjectWithTag("Player").transform;
+        to_Targets = (Target.position - transform.position).normalized;
     }
+    
     void Update()
     {
         if(MissileType == ProjectileType.stupid)
         {
-            transform.position += Direction*Time.deltaTime; 
+            transform.position += (to_Targets + Direction*Time.deltaTime)/2 * TranslationSpeed; 
         }
         else
         {
@@ -68,14 +68,13 @@ public class ProjectileController : MonoBehaviour
         Destroy(explo, 3f); 
         Destroy(gameObject);     
     }
-    bool takeDamage;
+
     void OnTriggerEnter(Collider other)
     {
         EngageDestruction(); 
-        if(other.gameObject.tag == "Player" && !takeDamage)
+        if(other.gameObject.transform == Target)
         {
-            takeDamage = true;
-            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(12);
+            Target.GetComponent<PlayerHealth>().TakeDamage(12f);
         }
     }
 }

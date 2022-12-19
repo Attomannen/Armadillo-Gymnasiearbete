@@ -17,7 +17,7 @@ public class CollisionCheck : MonoBehaviour
             if(hitCollider.gameObject.GetComponentInParent<Arne>() != null && !hasntHit)
             {
                 hasntHit = true;
-                hitCollider.gameObject.GetComponentInParent<Arne>().TakeDamage(21);
+                hitCollider.gameObject.GetComponentInParent<Arne>().TakeDamage(33);
             }
         }
     }

@@ -11,7 +11,7 @@ public class PlayerGun : MonoBehaviour
 {
     [SerializeField] int maxMagSize = 17;
     AudioSource source;
-
+    [SerializeField] int allAmmo = 102;
     [SerializeField] AudioClip shootSound;
     [SerializeField] AudioClip reloadSound;
     [SerializeField] TextMeshProUGUI magText;
@@ -52,19 +52,20 @@ public class PlayerGun : MonoBehaviour
 
     private void Update()
     {
-        magText.text = "Ammo: " + magazine;
-        if (magazine == 0 && !startReloading || reload.triggered && magazine <= 16 && !startReloading)
+        magText.text = magazine + "/" + allAmmo;
+        if (magazine == 0 && !startReloading && allAmmo !> 0 || reload.triggered && magazine <= 16 && !startReloading && allAmmo! > 0)
         {
             startReloading = true;
             StartCoroutine(Reload());
         }
     }
-
+    int holdAmountOfShots;
 
     public void Shoot()
     {
         if (LastShootTime + ShootDelay < Time.time && !isReloading)
         {
+            holdAmountOfShots++;
             magazine--;
             source.PlayOneShot(shootSound);
 
@@ -152,8 +153,10 @@ public class PlayerGun : MonoBehaviour
         yield return new WaitForSeconds(reloadTime);
         if (!reloading)
         {
+            allAmmo -= holdAmountOfShots;
             magazine = maxMagSize;
             reloading = true;
+            holdAmountOfShots = 0;
         }
         startReloading = false;
         isReloading = false;

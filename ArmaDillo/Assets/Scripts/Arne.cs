@@ -113,13 +113,16 @@ public class Arne : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0f);
+        if (health <= 1) Invoke(nameof(DestroyEnemy), 0f);
 
     }
     [SerializeField] GameObject toothObject;
     public void spawnTooth()
     {
+        for(int i = 0; i < 4; i++)
+        {
         Instantiate(toothObject,transform.position, Quaternion.identity);
+        }
         
     }
 

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
+
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
@@ -35,5 +37,5 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Taken Damage");
         currentHealth -= Damage;
     }
- 
+
 }

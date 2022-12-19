@@ -14,18 +14,11 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Bullet")
         {
-            TakeDamage(25);
+            TakeDamage(26);
         }
     }
 
