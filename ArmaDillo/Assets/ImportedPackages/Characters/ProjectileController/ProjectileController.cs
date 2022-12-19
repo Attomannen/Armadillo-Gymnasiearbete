@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour 
@@ -67,9 +68,14 @@ public class ProjectileController : MonoBehaviour
         Destroy(explo, 3f); 
         Destroy(gameObject);     
     }
-
+    bool takeDamage;
     void OnTriggerEnter(Collider other)
     {
         EngageDestruction(); 
+        if(other.gameObject.tag == "Player" && !takeDamage)
+        {
+            takeDamage = true;
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(12);
+        }
     }
 }

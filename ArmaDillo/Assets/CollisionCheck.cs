@@ -5,11 +5,8 @@ using UnityEngine;
 public class CollisionCheck : MonoBehaviour
 {
     [SerializeField] LayerMask enemy;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject hitMarker;
+
     bool hasntHit;
     // Update is called once per frame
     void Update()
@@ -19,11 +16,12 @@ public class CollisionCheck : MonoBehaviour
         {
             if(hitCollider.gameObject.GetComponentInParent<Arne>() != null && !hasntHit)
             {
-               hasntHit = true;
+                hasntHit = true;
                 hitCollider.gameObject.GetComponentInParent<Arne>().TakeDamage(21);
             }
         }
     }
+
 
     private void OnDrawGizmos()
     {

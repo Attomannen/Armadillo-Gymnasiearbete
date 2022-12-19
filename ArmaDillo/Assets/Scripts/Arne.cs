@@ -116,7 +116,12 @@ public class Arne : MonoBehaviour
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0f);
 
     }
-
+    [SerializeField] GameObject toothObject;
+    public void spawnTooth()
+    {
+        Instantiate(toothObject,transform.position, Quaternion.identity);
+        
+    }
 
     [SerializeField] LayerMask playerBullet;
   

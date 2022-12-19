@@ -17,9 +17,11 @@ public class SwitchForms : MonoBehaviour
     PlayerGun shoot;
    [SerializeField] Image crosshair1;
     [SerializeField] Image crosshair2;
+    InputController inputController;
 
     private void Awake()
     {
+        inputController = GetComponent<InputController>();
         anim = GetComponent<Animator>();
         movement = GetComponent<Movement>();
         controller = GetComponent<CharacterController>();
@@ -52,6 +54,7 @@ public class SwitchForms : MonoBehaviour
 
     void NormalArmadillo()
     {
+        inputController.enabled = true;
         crosshair1.enabled = true; crosshair2.enabled = true;
         shoot.enabled = true;
         anim.SetBool("Ball", false);
@@ -61,6 +64,7 @@ public class SwitchForms : MonoBehaviour
     void BallArmadillo()
     {
         crosshair1.enabled = false; crosshair2.enabled = false;
+        inputController.enabled = false;
 
         shoot.enabled = false;
         anim.SetBool("Ball", true);

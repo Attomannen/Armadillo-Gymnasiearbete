@@ -8,6 +8,7 @@ TagManager:
   - CinemachineTarget
   - FxTemporaire
   - Bullet
+  - Hitmarker
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - HidableWall
   - LaserProjectile
   - Bullet
-  - 
+  - Teeth
   - 
   - 
   - 

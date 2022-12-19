@@ -157,6 +157,8 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 8
+  hitMarker: {fileID: 5206663453720868232, guid: 0ad8765c3b6ef794bb480d595ab94ef3,
+    type: 3}
 --- !u!135 &1027289799558385185
 SphereCollider:
   m_ObjectHideFlags: 0
