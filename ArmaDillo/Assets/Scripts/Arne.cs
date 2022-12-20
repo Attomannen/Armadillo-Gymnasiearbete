@@ -42,6 +42,14 @@ public class Arne : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange && !dead) Patroling();
         if (playerInSightRange && !playerInAttackRange && !dead) ChasePlayer();
         if (playerInAttackRange && playerInSightRange && !dead) AttackPlayer();
+
+        if (!playerInAttackRange && playerInSightRange && !dead)
+        {
+
+            anim.SetBool("isWalking", true);
+            anim.ResetTrigger("Attack");
+
+        }
     }
 
     private void Patroling()
@@ -90,6 +98,7 @@ public class Arne : MonoBehaviour
 
         Vector3 lookDirection = player.position - transform.position;
         lookDirection.Normalize();
+        anim.SetBool("isWalking", false);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), rotationSpeed * Time.deltaTime);
         if (!alreadyAttacked)
@@ -107,7 +116,19 @@ public class Arne : MonoBehaviour
 
     void SpawnBullet()
     {
+        if (playerInAttackRange)
+        {
         Instantiate(bullet, arneMouth.position, Quaternion.identity);
+        }
+        anim.ResetTrigger("Attack");
+
+    }
+
+
+    void CheckAttackRange()
+    {
+        anim.ResetTrigger("Attack");
+
     }
 
     public void TakeDamage(int damage)
@@ -119,11 +140,16 @@ public class Arne : MonoBehaviour
     [SerializeField] GameObject toothObject;
     public void spawnTooth()
     {
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 1; i++)
         {
-        Instantiate(toothObject,transform.position, Quaternion.identity);
+         for(int b = 0; b < Random.Range(0,3); b++)
+            {
+             Instantiate(toothObject,transform.position, Quaternion.identity);
+            }
+            Instantiate(toothObject, transform.position, Quaternion.identity);
+
         }
-        
+
     }
 
     [SerializeField] LayerMask playerBullet;

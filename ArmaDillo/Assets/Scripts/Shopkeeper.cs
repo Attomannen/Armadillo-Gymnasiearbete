@@ -42,6 +42,9 @@ public class Shopkeeper : MonoBehaviour
     }
     bool hasInteracted;
     bool interact;
+    [SerializeField] AudioClip helloClip;
+    [SerializeField] AudioClip howAreYouClip;
+    [SerializeField] AudioClip goodbyeClip;
 
     public void interactBool()
     {
@@ -66,6 +69,16 @@ public class Shopkeeper : MonoBehaviour
             interaction.enabled = false;
             anim.SetBool("Standing", true);
             cam.Priority = 20;
+
+            // assign the dialogue lines and audio clips to variables
+            string[] lines = { "Hello!", "Welcome to my shop", "Would you want to take a look?" };
+            AudioClip[] clips = { helloClip, howAreYouClip, goodbyeClip };
+
+            // get a reference to the DialogueManager script
+            DialogueManager dialogueManager = GetComponent<DialogueManager>();
+
+            // start the dialogue by calling the StartDialogue method and passing in the lines and clips
+            dialogueManager.StartDialogue(lines, clips);
         }
     }
 
@@ -73,6 +86,8 @@ public class Shopkeeper : MonoBehaviour
     {
         if (playerInRange && hasInteracted)
         {
+            DialogueManager dialogueManager = GetComponent<DialogueManager>();
+            dialogueManager.EndDialogue();
             stopInteractBool();
             gun.enabled = true;
             movement.enabled = true;

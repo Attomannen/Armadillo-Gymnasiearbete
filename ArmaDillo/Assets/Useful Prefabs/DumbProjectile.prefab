@@ -261,7 +261,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 0.375
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3634418874239337777
 MonoBehaviour:
@@ -280,7 +280,7 @@ MonoBehaviour:
   LookAt: 1
   Direction: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  TranslationSpeed: 1.25
+  TranslationSpeed: 0.4
   LifeTime: 4
 --- !u!54 &3686049357981137919
 Rigidbody:
