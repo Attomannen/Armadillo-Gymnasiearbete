@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Hitmarker
   - Shopkeeper
+  - Shop
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - Bullet
   - Teeth
   - Shopkeeper
-  - 
-  - 
+  - Health
+  - Shop
   - 
   - 
   - 
