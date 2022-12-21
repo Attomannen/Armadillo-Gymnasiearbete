@@ -5,6 +5,7 @@ using Cinemachine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UIElements;
+using UnityEditor.Rendering;
 
 public class Shopkeeper : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class Shopkeeper : MonoBehaviour
     [SerializeField] SwitchForms switchForms;
     [SerializeField] PlayerHealth health;
     [SerializeField] PlayerGun gun;
+    [SerializeField] List<CinemachineVirtualCamera> shopCams;
+    [SerializeField] int whichCam;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +43,11 @@ public class Shopkeeper : MonoBehaviour
             interaction.enabled = true;
             playerInRange = true;
             }
+        }
+
+        if (Mouse.current.middleButton.wasPressedThisFrame)
+        {
+            SwitchActiveCam();
         }
     }
     bool hasInteracted;
@@ -102,4 +112,5 @@ public class Shopkeeper : MonoBehaviour
         }
     }
   
+
 }

@@ -79,7 +79,6 @@ public class DialogueManager : MonoBehaviour
         audioSource.Stop();
         dialoguePanel.SetActive(false);
         isDialogueActive = false;
-
         // reset the current line of dialogue
         currentLine = 0;
     }
