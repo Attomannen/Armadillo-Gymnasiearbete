@@ -93,6 +93,7 @@ public class Shopkeeper : MonoBehaviour
 
             // start the dialogue by calling the StartDialogue method and passing in the lines and clips
             dialogueManager.StartDialogue(lines, clips);
+
         }
     }
 
@@ -100,6 +101,7 @@ public class Shopkeeper : MonoBehaviour
     {
         if (playerInRange && hasInteracted)
         {
+            
             DialogueManager dialogueManager = GetComponent<DialogueManager>();
             dialogueManager.EndDialogue();
             stopInteractBool();
@@ -113,6 +115,10 @@ public class Shopkeeper : MonoBehaviour
             interaction.enabled = true;
             anim.SetBool("Standing", false);
             cam.Priority = 0;
+            shopCams[0].Priority = 0;
+            shopCams[1].Priority = 0;
+            shopCams[2].Priority = 0;
+
         }
     }
     private int currentActiveIndex = 0;
