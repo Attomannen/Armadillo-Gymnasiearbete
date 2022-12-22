@@ -29,6 +29,8 @@ public class Shopkeeper : MonoBehaviour
         interaction.enabled = false;
 
         anim = GetComponent<Animator>();
+
+        dialogueManager = GetComponent<DialogueManager>();
     }
 
     bool playerInRange;
@@ -45,10 +47,12 @@ public class Shopkeeper : MonoBehaviour
             }
         }
 
-        if (Mouse.current.middleButton.wasPressedThisFrame)
+
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
-            SwitchActiveCam();
+            SwitchCam();
         }
+     
     }
     bool hasInteracted;
     bool interact;
@@ -111,6 +115,54 @@ public class Shopkeeper : MonoBehaviour
             cam.Priority = 0;
         }
     }
-  
+    private int currentActiveIndex = 0;
+    DialogueManager dialogueManager;
 
+    void SwitchCam()
+    {
+
+
+        shopCams[currentActiveIndex].Priority = 0;
+        currentActiveIndex++;
+        if (currentActiveIndex >= shopCams.Count)
+            currentActiveIndex = 0;
+        shopCams[currentActiveIndex].Priority = 20;
+
+
+        if(currentActiveIndex == 0)
+        {
+            dialogueManager.EndDialogue();
+            string[] lines = { "Drinkadillo", "Makes you faster and jump higher", "Buy enough to outrun the big crocodiles missiles" };
+            AudioClip[] clips = { helloClip, howAreYouClip, goodbyeClip };
+
+
+            // start the dialogue by calling the StartDialogue method and passing in the lines and clips
+            dialogueManager.StartDialogue(lines, clips);
+        }
+        else if(currentActiveIndex == 1)
+        {
+            dialogueManager.EndDialogue();
+
+            string[] lines = { "Drum Magazine", "Makes your Magazine have 5 more bullets per purchase", "But makes reloading slower" };
+            AudioClip[] clips = { helloClip, howAreYouClip, goodbyeClip };
+
+            // get a reference to the DialogueManager script
+
+            // start the dialogue by calling the StartDialogue method and passing in the lines and clips
+            dialogueManager.StartDialogue(lines, clips);
+        }
+        else if (currentActiveIndex == 2)
+        {
+            dialogueManager.EndDialogue();
+
+            string[] lines = { "Lightning Ammo!", "Makes you shoot faster", "Both in bullet velocity but also trigger speed" };
+            AudioClip[] clips = { helloClip, howAreYouClip, goodbyeClip };
+
+            // get a reference to the DialogueManager script
+
+            // start the dialogue by calling the StartDialogue method and passing in the lines and clips
+            dialogueManager.StartDialogue(lines, clips);
+        }
+    }
+   
 }
