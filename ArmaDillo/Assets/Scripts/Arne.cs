@@ -28,9 +28,11 @@ public class Arne : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
 
     [SerializeField] Animator anim;
-
+    float normalRange, normalAttackRange;
     private void Awake()
     {
+        normalAttackRange = attackRange;
+        normalRange = sightRange;
         player = GameObject.Find("Player").transform;
     }
 
@@ -136,6 +138,18 @@ public class Arne : MonoBehaviour
         health -= damage;
         if (health <= 1) Invoke(nameof(DestroyEnemy), 0f);
 
+        StartCoroutine(PlayerAttackedOutSideRange());
+    }
+
+    IEnumerator PlayerAttackedOutSideRange()
+    {
+
+        attackRange = 950;
+        sightRange = 950;
+        yield return new WaitForSeconds(2.7f);
+        attackRange = normalRange;
+        sightRange = normalRange;
+        StopCoroutine(PlayerAttackedOutSideRange());
     }
     [SerializeField] GameObject toothObject;
     public void spawnTooth()
