@@ -279,8 +279,8 @@ MonoBehaviour:
   Explosion: {fileID: 1436062230585292, guid: a4a2a9196367c497997fa4396027a82b, type: 3}
   LookAt: 1
   Direction: {x: 0, y: 0, z: 0}
-  RotationSpeed: 0
-  TranslationSpeed: 0.4
+  RotationSpeed: 0.1
+  TranslationSpeed: 1.25
   LifeTime: 4
 --- !u!54 &3686049357981137919
 Rigidbody:

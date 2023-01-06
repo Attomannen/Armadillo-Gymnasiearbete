@@ -1473,8 +1473,8 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 25
   timeBetweenAttacks: 2.5
-  sightRange: 65
-  attackRange: 55
+  sightRange: 250
+  attackRange: 75
   playerInSightRange: 0
   playerInAttackRange: 0
   anim: {fileID: 4379129309499821974}

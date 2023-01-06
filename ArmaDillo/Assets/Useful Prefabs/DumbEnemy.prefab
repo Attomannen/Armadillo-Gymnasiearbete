@@ -1809,8 +1809,8 @@ MonoBehaviour:
   health: 100
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 25
-  timeBetweenAttacks: 2.5
-  sightRange: 45
+  timeBetweenAttacks: 1.5
+  sightRange: 225
   attackRange: 40
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -1857,7 +1857,7 @@ Animator:
   m_GameObject: {fileID: 7753767182904833374}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7e539a92fc4bceb41b8f74b464d48581, type: 2}
+  m_Controller: {fileID: 9100000, guid: e9a412a84a028bc46bde172fe8a28559, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
