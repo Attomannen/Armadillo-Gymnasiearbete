@@ -123,7 +123,7 @@ public class Arne : MonoBehaviour
         Instantiate(bullet, arneMouth.position, Quaternion.identity);
         }
         anim.ResetTrigger("Attack");
-
+        
     }
 
 

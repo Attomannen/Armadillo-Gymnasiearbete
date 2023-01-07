@@ -1,0 +1,4 @@
+repository "Armadillo@Private_Games@cloud"
+  path "/"
+    br "/main"
+    co "/main"

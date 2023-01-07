@@ -138,8 +138,8 @@ public class Shopkeeper : MonoBehaviour
         if(currentActiveIndex == 0)
         {
             dialogueManager.EndDialogue();
-            string[] lines = { "Drinkadillo", "Makes you faster and jump higher", "Buy enough to outrun the big crocodiles missiles" };
-            AudioClip[] clips = { helloClip, howAreYouClip, goodbyeClip };
+            string[] lines = { "Drinkadillo                                            For 5 Teeth"};
+            AudioClip[] clips = { helloClip};
 
 
             // start the dialogue by calling the StartDialogue method and passing in the lines and clips
@@ -149,8 +149,8 @@ public class Shopkeeper : MonoBehaviour
         {
             dialogueManager.EndDialogue();
 
-            string[] lines = { "Drum Magazine", "Makes your Magazine have 5 more bullets per purchase", "But makes reloading slower" };
-            AudioClip[] clips = { helloClip, howAreYouClip, goodbyeClip };
+            string[] lines = { "Drum Magazine                                          For 15 Teeth"};
+            AudioClip[] clips = { helloClip};
 
             // get a reference to the DialogueManager script
 

@@ -81,6 +81,7 @@ public class Movement : MonoBehaviour
         if (jumpAction.triggered && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            anim.SetTrigger("Jump");
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
